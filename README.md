@@ -1,4 +1,4 @@
-# ENTRUST (Laravel 5 Package)
+# ENTRUST (Laravel 6 Package)
 
 Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 6**.
 
