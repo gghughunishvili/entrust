@@ -1,6 +1,6 @@
-# ENTRUST (Laravel 6 Package)
+# ENTRUST (Laravel 7 Package)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 6**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 7**.
 
 ## Contents
 
@@ -27,7 +27,7 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
 
 ## Installation
 
-1) In order to install Laravel 6 Entrust, just add the following to your composer.json. Then run `composer update`:
+1) In order to install Laravel 7 Entrust, just add the following to your composer.json. Then run `composer update`:
 
 ```json
 "gghughunishvili/entrust": "^2.0"
