@@ -31,6 +31,10 @@
         {
             "name": "Giorgi Ghughunishvili",
             "email": "gghughunishvili@gmail.com"
+        },
+        {
+            "name": "Serhii Moskalenko",
+            "email": "serg.mosk.dev@gmail.com"
         }
     ],
     "require": {
