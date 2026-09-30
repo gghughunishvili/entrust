@@ -40,7 +40,8 @@ The package tracks Laravel's own major release line: Entrust `11.x` targets Lara
 | `^10.0` | `6.x` – `10.x` | `7.2+` |
 
 Older Laravel releases are no longer maintained here. If you are still on Laravel 6–10,
-stay on `^10.0`.
+stay on `^10.0`. **Lumen is no longer supported** — it never reached these versions and
+Laravel has discontinued it. Lumen users should stay on `^10.0`, or `3.0` for Lumen 7.
 
 ## Installation
 
@@ -546,6 +547,38 @@ When trying to use the EntrustUserTrait methods, you encounter the error which l
 then probably you don't have published Entrust assets or something went wrong when you did it.
 First of all check that you have the `entrust.php` file in your `config` directory.
 If you don't, then try `php artisan vendor:publish --tag=entrust-config` and, if it does not appear, manually copy the `vendor/gghughunishvili/entrust/src/config/config.php` file into your config directory and rename it `entrust.php`.
+
+### `Class 'Entrust' not found` on Lumen
+
+Lumen is **not supported from `11.0.0` onwards** — this package now targets Laravel 11 and
+newer, and Lumen never reached those versions. Lumen users should stay on Entrust `^10.0`
+(or `3.0` for Lumen 7).
+
+On those older tags, the error
+
+```
+Class 'Entrust' not found
+```
+
+thrown from `Laravel\Lumen\Application::withFacades()` means the alias array is the wrong
+way round. Lumen's `withAliases()` iterates `$merged as $original => $alias` and calls
+`class_alias($original, $alias)`, so the key is the **facade class** and the value is the
+**alias** — the reverse of Laravel's `config/app.php`. Writing it Laravel-style makes Lumen
+call `class_alias('Entrust', ...)`, and `Entrust` is not a class that exists yet.
+
+```php
+// bootstrap/app.php — wrong, this is the Laravel order
+$app->withFacades(true, ['Entrust' => Zizaco\Entrust\EntrustFacade::class]);
+
+// correct for Lumen
+$app->withFacades(true, [Zizaco\Entrust\EntrustFacade::class => 'Entrust']);
+```
+
+Lumen also has no `vendor:publish` command, so copy
+`vendor/gghughunishvili/entrust/src/config/config.php` to `config/entrust.php` by hand and
+register it with `$app->configure('entrust');`.
+
+### Custom model namespaces
 
 If your app uses a custom namespace then you'll need to tell entrust where your `permission` and `role` models are, you can do this by editing the config file in `config/entrust.php`
 

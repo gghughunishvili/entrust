@@ -33,6 +33,12 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 ### Fixed
 
+- The CI workflow, which had been red since #11. It was an unmodified copy of the Laravel
+  *application* template: it copied a `.env.example` this package does not have and
+  created a SQLite database the suite never opens, on `actions/checkout@v1`. Replaced by a
+  PHP × Laravel matrix.
+- README now documents the Lumen alias-order trap behind #5: Lumen's `withAliases()` keys
+  the array by facade class, the reverse of Laravel's `config/app.php`.
 - `explode(): Passing null to parameter #2` deprecation in the `EntrustRole`,
   `EntrustPermission` and `EntrustAbility` middleware on PHP 8.1+.
 - Implicitly nullable parameter deprecation on PHP 8.4 in the test suite.
@@ -40,6 +46,9 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 ### Removed
 
 - Support for Laravel 6 through 10. Stay on Entrust `^10.0` for those.
+- Support for **Lumen**, which never reached Laravel 11 and has been discontinued
+  upstream. The `lumen` keyword is gone from `composer.json`; Lumen users stay on `^10.0`
+  (or `3.0` for Lumen 7). Resolves the long-standing question in #5.
 - `composer.lock` is no longer committed; a library should resolve against the host
   application's constraints.
 
