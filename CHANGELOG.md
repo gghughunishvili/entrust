@@ -46,6 +46,8 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 ### Fixed
 
+- `.gitattributes` stripped `README.md` from release dists while shipping the CI workflow
+  and `docs.php`. Installs now get the README and none of the development files.
 - The CI workflow, which had been red since #11. It was an unmodified copy of the Laravel
   *application* template: it copied a `.env.example` this package does not have and
   created a SQLite database the suite never opens, on `actions/checkout@v1`. Replaced by a
@@ -58,6 +60,8 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 ### Removed
 
+- `docs.php`, a Sami config. Sami was abandoned upstream in 2019 and was never a
+  dependency of this package, so the file could not run.
 - Support for Laravel 6 through 10. Stay on Entrust `^10.0` for those.
 - Support for **Lumen**, which never reached Laravel 11 and has been discontinued
   upstream. The `lumen` keyword is gone from `composer.json`; Lumen users stay on `^10.0`
