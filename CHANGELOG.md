@@ -3,6 +3,19 @@
 All notable changes to this package are documented here. The major version tracks the
 Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
+## [12.0.0]
+
+### Added
+
+- Support for **Laravel 12**. `illuminate/console`, `illuminate/support`,
+  `illuminate/cache` and `illuminate/database` now accept `^11.0|^12.0`.
+- PHPUnit 12 is accepted as a dev dependency (`^10.5.38|^11.0|^12.0`).
+- The CI matrix runs both Laravel 11 and Laravel 12 across PHP 8.2, 8.3 and 8.4.
+
+### Changed
+
+- README compatibility table and install instructions updated for the 12.x line.
+
 ## [11.0.0]
 
 ### Added
@@ -53,5 +66,6 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 See the [commit history](https://github.com/gghughunishvili/entrust/commits/master).
 
+[12.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/12.0.0
 [11.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/11.0.0
 [10.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/10.0.0

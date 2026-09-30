@@ -1,10 +1,10 @@
-# ENTRUST (Laravel 11 Package)
+# ENTRUST (Laravel 12 Package)
 
 [![Tests](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml/badge.svg)](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/gghughunishvili/entrust/v/stable)](https://packagist.org/packages/gghughunishvili/entrust)
 [![License](https://poser.pugx.org/gghughunishvili/entrust/license)](https://packagist.org/packages/gghughunishvili/entrust)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11 and 12**.
 
 ## Contents
 
@@ -32,10 +32,12 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
 
 ## Compatibility
 
-The package tracks Laravel's own major release line: Entrust `11.x` targets Laravel `11.x`.
+The package tracks Laravel's own major release line: Entrust `12.x` targets Laravel `12.x`,
+and each release keeps working with the Laravel majors before it inside the supported window.
 
 | Entrust | Laravel | PHP |
 | --- | --- | --- |
+| `^12.0` | `11.x`, `12.x` | `8.2` – `8.4` |
 | `^11.0` | `11.x` | `8.2` – `8.4` |
 | `^10.0` | `6.x` – `10.x` | `7.2+` |
 
@@ -44,10 +46,10 @@ stay on `^10.0`.
 
 ## Installation
 
-1) Require the package. It targets Laravel 11:
+1) Require the package. It supports Laravel 11 and 12:
 
 ```shell
-composer require gghughunishvili/entrust:^11.0
+composer require gghughunishvili/entrust:^12.0
 ```
 
 2) The service provider and the `Entrust` facade alias are registered automatically through
@@ -71,8 +73,8 @@ php artisan vendor:publish --tag=entrust-config
 ],
 ```
 
-5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 no longer
-ships `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
+5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and 12 no
+longer ship `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
 
 ```php
 use Illuminate\Foundation\Configuration\Middleware;
@@ -110,8 +112,8 @@ php artisan migrate
 After the migration, four new tables will be present:
 - `roles` &mdash; stores role records
 - `permissions` &mdash; stores permission records
-- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/11.x/eloquent-relationships#many-to-many) relations between roles and users
-- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/11.x/eloquent-relationships#many-to-many) relations between roles and permissions
+- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and users
+- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and permissions
 
 ### Models
 
@@ -435,7 +437,7 @@ For more complex situations use `ability` middleware which accepts 3 parameters:
 
 ### Short syntax route filter
 
-> **Removed on Laravel 11.** `Entrust::routeNeedsRole()`, `Entrust::routeNeedsPermission()`
+> **Removed on Laravel 11+.** `Entrust::routeNeedsRole()`, `Entrust::routeNeedsPermission()`
 > and `Entrust::routeNeedsRoleOrPermission()` are built on `Route::filter()` / `Route::when()`,
 > which Laravel dropped in 5.2. They are kept for backwards compatibility but will throw on
 > Laravel 11. Use [Middleware](#middleware) instead.
@@ -488,7 +490,7 @@ Entrust::routeNeedsRoleOrPermission(
 
 ### Route filter
 
-> **Removed on Laravel 11.** `Route::filter()` and `Route::when()` no longer exist. The
+> **Removed on Laravel 11+.** `Route::filter()` and `Route::when()` no longer exist. The
 > equivalent today is a middleware, or an inline check with `Entrust::can()` /
 > `Entrust::hasRole()` inside the controller.
 
@@ -563,7 +565,7 @@ Entrust is free software distributed under the terms of the MIT license.
 
 Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
 
-The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11:
+The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11 and 12:
 
 ```shell
 composer install
