@@ -96,11 +96,12 @@ php artisan vendor:publish --tag=entrust-config
 ```
 
 5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and newer no
-longer ship `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
+longer ship `app/Http/Kernel.php`, so middleware aliases go in `bootstrap/app.php`. Add the
+`alias()` call **inside the `withMiddleware` closure your skeleton already has** — do not add
+a second `withMiddleware()`:
 
 ```php
-use Illuminate\Foundation\Configuration\Middleware;
-
+// bootstrap/app.php
 ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
         'role'       => \Zizaco\Entrust\Middleware\EntrustRole::class,
@@ -108,6 +109,12 @@ use Illuminate\Foundation\Configuration\Middleware;
         'ability'    => \Zizaco\Entrust\Middleware\EntrustAbility::class,
     ]);
 })
+```
+
+`Illuminate\Foundation\Configuration\Middleware` is already imported at the top of the
+generated `bootstrap/app.php`. The closure's signature differs slightly between skeletons —
+Laravel 13 generates `function (Middleware $middleware): void` — so keep whichever one your
+`bootstrap/app.php` came with and only add the body.
 
 ## Configuration
 
