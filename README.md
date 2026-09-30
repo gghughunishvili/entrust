@@ -43,7 +43,7 @@ page, since the install steps and the supported APIs differ.
 
 | Entrust | Laravel | PHP | Lumen | Status | Docs for that version |
 | --- | --- | --- | --- | --- | --- |
-| `^13.0` | `11.x` – `13.x` | `8.2`+ (`8.3`+ for Laravel 13) | — | **Maintained** | [13.0.0](https://github.com/gghughunishvili/entrust/blob/13.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/13.0.0) |
+| `^13.0` | `11.x` – `13.x` | `8.2`+ (`8.3`+ for Laravel 13) | — | **Maintained** | [13.0.1](https://github.com/gghughunishvili/entrust/blob/13.0.1/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/13.0.1) |
 | `^12.0` | `11.x`, `12.x` | `8.2` – `8.4` | — | Maintained | [12.0.0](https://github.com/gghughunishvili/entrust/blob/12.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/12.0.0) |
 | `^11.0` | `11.x` | `8.2` – `8.4` | — | Maintained | [11.0.0](https://github.com/gghughunishvili/entrust/blob/11.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/11.0.0) |
 | `^10.0` | `6.x` – `10.x` | `7.2`+ | 6+ | End of life | [10.0.0](https://github.com/gghughunishvili/entrust/blob/10.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/10.0.0) |
@@ -59,6 +59,11 @@ Packagist serves it as `3.0`.
 
 Only `11.x` and newer get fixes. The end-of-life rows are listed so anyone already pinned to
 one can find the matching documentation — they will not receive updates.
+
+The usage API is identical across `11.x`, `12.x` and `13.x` — only the supported Laravel and
+PHP ranges differ — so the `13.x` page is accurate for all three. Prefer it if the `11.0.0`
+or `12.0.0` page renders oddly: both shipped with an unclosed Markdown code fence, fixed in
+`13.0.1`.
 
 **Lumen is no longer supported from `11.0.0` onwards.** Lumen never reached Laravel 11 and
 Laravel has discontinued it. Lumen users should stay on `^10.0`, or `3.0` for Lumen 7 — see
