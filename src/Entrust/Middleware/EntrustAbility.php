@@ -40,11 +40,11 @@ class EntrustAbility
 	public function handle($request, Closure $next, $roles, $permissions, $validateAll = false)
 	{
 		if (!is_array($roles)) {
-			$roles = explode(self::DELIMITER, $roles);
+			$roles = explode(self::DELIMITER, (string) $roles);
 		}
 
 		if (!is_array($permissions)) {
-			$permissions = explode(self::DELIMITER, $permissions);
+			$permissions = explode(self::DELIMITER, (string) $permissions);
 		}
 
 		if (!is_bool($validateAll)) {

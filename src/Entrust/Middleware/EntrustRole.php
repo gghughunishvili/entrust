@@ -38,7 +38,7 @@ class EntrustRole
 	public function handle($request, Closure $next, $roles)
 	{
 		if (!is_array($roles)) {
-			$roles = explode(self::DELIMITER, $roles);
+			$roles = explode(self::DELIMITER, (string) $roles);
 		}
 
 		if ($this->auth->guest() || !$request->user()->hasRole($roles)) {

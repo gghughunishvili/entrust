@@ -29,7 +29,7 @@ class EntrustServiceProvider extends ServiceProvider
         // Publish config files
         $this->publishes([
             __DIR__.'/../config/config.php' => app()->basePath() . '/config/entrust.php',
-        ]);
+        ], 'entrust-config');
 
         // Register commands
         $this->commands('command.entrust.migration');

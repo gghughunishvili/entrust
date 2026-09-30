@@ -1,9 +1,8 @@
 {
     "name": "gghughunishvili/entrust",
-    "description": "This package provides a flexible way to add Role-based Permissions to Laravel/Lumen 6",
+    "description": "This package provides a flexible way to add Role-based Permissions to Laravel 11.",
     "keywords": [
         "laravel",
-        "lumen",
         "illuminate",
         "auth",
         "roles",
@@ -34,15 +33,15 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
-        "illuminate/console": "~6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/support": "~6.0|^7.0|^8.0|^9.0|^10.0",
-        "illuminate/cache": "~6.0|^7.0|^8.0|^9.0|^10.0"
+        "php": "^8.2",
+        "illuminate/console": "^11.0",
+        "illuminate/support": "^11.0",
+        "illuminate/cache": "^11.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0|^9.0",
-        "mockery/mockery": "^1.0",
-        "illuminate/database": "~6.0|^7.0|^8.0|^9.0|^10.0"
+        "phpunit/phpunit": "^10.5.38|^11.0",
+        "mockery/mockery": "^1.6.12",
+        "illuminate/database": "^11.0"
     },
     "autoload": {
         "classmap": [
@@ -67,5 +66,8 @@
             "tests/Middleware/MiddlewareTest.php"
         ]
     },
-    "minimum-stability": "dev"
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
 }
