@@ -1,6 +1,6 @@
 {
     "name": "gghughunishvili/entrust",
-    "description": "This package provides a flexible way to add Role-based Permissions to Laravel 11 and 12.",
+    "description": "This package provides a flexible way to add Role-based Permissions to Laravel 11, 12 and 13.",
     "keywords": [
         "laravel",
         "lumen",
@@ -35,14 +35,14 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/console": "^11.0|^12.0",
-        "illuminate/support": "^11.0|^12.0",
-        "illuminate/cache": "^11.0|^12.0"
+        "illuminate/console": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
+        "illuminate/cache": "^11.0|^12.0|^13.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5.38|^11.0|^12.0",
         "mockery/mockery": "^1.6.12",
-        "illuminate/database": "^11.0|^12.0"
+        "illuminate/database": "^11.0|^12.0|^13.0"
     },
     "autoload": {
         "classmap": [

@@ -1,10 +1,10 @@
-# ENTRUST (Laravel 12 Package)
+# ENTRUST (Laravel 13 Package)
 
 [![Tests](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml/badge.svg)](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/gghughunishvili/entrust/v/stable)](https://packagist.org/packages/gghughunishvili/entrust)
 [![License](https://poser.pugx.org/gghughunishvili/entrust/license)](https://packagist.org/packages/gghughunishvili/entrust)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11 and 12**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11, 12 and 13**.
 
 ## Contents
 
@@ -32,11 +32,12 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
 
 ## Compatibility
 
-The package tracks Laravel's own major release line: Entrust `12.x` targets Laravel `12.x`,
+The package tracks Laravel's own major release line: Entrust `13.x` targets Laravel `13.x`,
 and each release keeps working with the Laravel majors before it inside the supported window.
 
 | Entrust | Laravel | PHP |
 | --- | --- | --- |
+| `^13.0` | `11.x`, `12.x`, `13.x` | `8.2` – `8.4` (Laravel 13 itself needs `8.3+`) |
 | `^12.0` | `11.x`, `12.x` | `8.2` – `8.4` |
 | `^11.0` | `11.x` | `8.2` – `8.4` |
 | `^10.0` | `6.x` – `10.x` | `7.2+` |
@@ -46,10 +47,10 @@ stay on `^10.0`.
 
 ## Installation
 
-1) Require the package. It supports Laravel 11 and 12:
+1) Require the package. It supports Laravel 11, 12 and 13:
 
 ```shell
-composer require gghughunishvili/entrust:^12.0
+composer require gghughunishvili/entrust:^13.0
 ```
 
 2) The service provider and the `Entrust` facade alias are registered automatically through
@@ -73,7 +74,7 @@ php artisan vendor:publish --tag=entrust-config
 ],
 ```
 
-5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and 12 no
+5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and newer no
 longer ship `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
 
 ```php
@@ -112,8 +113,8 @@ php artisan migrate
 After the migration, four new tables will be present:
 - `roles` &mdash; stores role records
 - `permissions` &mdash; stores permission records
-- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and users
-- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and permissions
+- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/13.x/eloquent-relationships#many-to-many) relations between roles and users
+- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/13.x/eloquent-relationships#many-to-many) relations between roles and permissions
 
 ### Models
 
@@ -565,7 +566,7 @@ Entrust is free software distributed under the terms of the MIT license.
 
 Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
 
-The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11 and 12:
+The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11, 12 and 13:
 
 ```shell
 composer install
