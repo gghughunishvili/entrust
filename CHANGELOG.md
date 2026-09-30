@@ -3,6 +3,30 @@
 All notable changes to this package are documented here. The major version tracks the
 Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
+## [13.0.0]
+
+### Added
+
+- Support for **Laravel 13**. `illuminate/console`, `illuminate/support`,
+  `illuminate/cache` and `illuminate/database` now accept `^11.0|^12.0|^13.0`.
+- The CI matrix covers Laravel 11, 12 and 13. Laravel 13 is excluded on PHP 8.2, which
+  it does not support, and the lowest-dependency run is pinned to each Laravel major's
+  own minimum PHP.
+
+### Changed
+
+- README compatibility table and install instructions updated for the 13.x line.
+- The compatibility table is now a per-version documentation index: every released tag
+  from `2.0.0` up is listed with the Laravel, PHP and Lumen versions read from that tag's
+  own `composer.json`, its maintenance status, and links to both the README frozen at that
+  tag and its release page. Anyone pinned to an older Entrust can find the docs that match
+  what they actually installed instead of reading the latest README.
+
+### Notes
+
+- The package's own PHP requirement stays at `^8.2` so Laravel 11 and 12 users on PHP 8.2
+  keep working. Laravel 13 requires PHP 8.3 and Composer enforces that on its own.
+
 ## [12.0.0]
 
 ### Added
@@ -79,6 +103,7 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 See the [commit history](https://github.com/gghughunishvili/entrust/commits/master).
 
+[13.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/13.0.0
 [12.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/12.0.0
 [11.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/11.0.0
 [10.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/10.0.0

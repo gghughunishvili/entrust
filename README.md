@@ -1,10 +1,10 @@
-# ENTRUST (Laravel 12 Package)
+# ENTRUST (Laravel 13 Package)
 
 [![Tests](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml/badge.svg)](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/gghughunishvili/entrust/v/stable)](https://packagist.org/packages/gghughunishvili/entrust)
 [![License](https://poser.pugx.org/gghughunishvili/entrust/license)](https://packagist.org/packages/gghughunishvili/entrust)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11 and 12**.
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11, 12 and 13**.
 
 ## Contents
 
@@ -26,31 +26,52 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
     - [Short syntax route filter](#short-syntax-route-filter)
     - [Route filter](#route-filter)
 - [Troubleshooting](#troubleshooting)
+    - [`Class 'Entrust' not found` on Lumen](#class-entrust-not-found-on-lumen)
+    - [Custom model namespaces](#custom-model-namespaces)
 - [License](#license)
 - [Contribution guidelines](#contribution-guidelines)
 - [Additional information](#additional-information)
 
 ## Compatibility
 
-The package tracks Laravel's own major release line: Entrust `12.x` targets Laravel `12.x`,
+The package tracks Laravel's own major release line: Entrust `13.x` targets Laravel `13.x`,
 and each release keeps working with the Laravel majors before it inside the supported window.
 
-| Entrust | Laravel | PHP |
-| --- | --- | --- |
-| `^12.0` | `11.x`, `12.x` | `8.2` – `8.4` |
-| `^11.0` | `11.x` | `8.2` – `8.4` |
-| `^10.0` | `6.x` – `10.x` | `7.2+` |
+**This README documents the latest release.** Every version has its own docs, frozen at its
+release tag — if you are pinned to an older Entrust, read that row's docs rather than this
+page, since the install steps and the supported APIs differ.
 
-Older Laravel releases are no longer maintained here. If you are still on Laravel 6–10,
-stay on `^10.0`. **Lumen is no longer supported** — it never reached these versions and
-Laravel has discontinued it. Lumen users should stay on `^10.0`, or `3.0` for Lumen 7.
+| Entrust | Laravel | PHP | Lumen | Status | Docs for that version |
+| --- | --- | --- | --- | --- | --- |
+| `^13.0` | `11.x` – `13.x` | `8.2`+ (`8.3`+ for Laravel 13) | — | **Maintained** | [13.0.0](https://github.com/gghughunishvili/entrust/blob/13.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/13.0.0) |
+| `^12.0` | `11.x`, `12.x` | `8.2` – `8.4` | — | Maintained | [12.0.0](https://github.com/gghughunishvili/entrust/blob/12.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/12.0.0) |
+| `^11.0` | `11.x` | `8.2` – `8.4` | — | Maintained | [11.0.0](https://github.com/gghughunishvili/entrust/blob/11.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/11.0.0) |
+| `^10.0` | `6.x` – `10.x` | `7.2`+ | 6+ | End of life | [10.0.0](https://github.com/gghughunishvili/entrust/blob/10.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/10.0.0) |
+| `^9.0` | `6.x` – `9.x` | `7.2`+ | 6+ | End of life | [9.0.0](https://github.com/gghughunishvili/entrust/blob/9.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/9.0.0) |
+| `^4.0` | `6.x` – `8.x` | `7.2`+ | 6+ | End of life | [4.0.0](https://github.com/gghughunishvili/entrust/blob/4.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/4.0.0) |
+| `3.0` | `6.x`, `7.x` | `7.2`+ | 6, 7 | End of life | [3.0.0](https://github.com/gghughunishvili/entrust/blob/3.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/3.0.0) |
+| `^2.1` | `6.x` | `7.2`+ | 6 | End of life | [2.1.0](https://github.com/gghughunishvili/entrust/blob/2.1.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/2.1.0) |
+| `2.0.0` | `6.x` | `7.2`+ | 6 | End of life | [2.0.0](https://github.com/gghughunishvili/entrust/blob/2.0.0/README.md) · [release](https://github.com/gghughunishvili/entrust/releases/tag/2.0.0) |
+
+Every constraint above is read from that tag's own `composer.json`, not inferred from its
+release notes. The `3.0` row is tagged both `3.0` and `3.0.0` with identical contents;
+Packagist serves it as `3.0`.
+
+Only `11.x` and newer get fixes. The end-of-life rows are listed so anyone already pinned to
+one can find the matching documentation — they will not receive updates.
+
+**Lumen is no longer supported from `11.0.0` onwards.** Lumen never reached Laravel 11 and
+Laravel has discontinued it. Lumen users should stay on `^10.0`, or `3.0` for Lumen 7 — see
+the Lumen note under [Troubleshooting](#class-entrust-not-found-on-lumen).
+
+A full list of changes per release is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Installation
 
-1) Require the package. It supports Laravel 11 and 12:
+1) Require the package. It supports Laravel 11, 12 and 13:
 
 ```shell
-composer require gghughunishvili/entrust:^12.0
+composer require gghughunishvili/entrust:^13.0
 ```
 
 2) The service provider and the `Entrust` facade alias are registered automatically through
@@ -74,7 +95,7 @@ php artisan vendor:publish --tag=entrust-config
 ],
 ```
 
-5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and 12 no
+5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 and newer no
 longer ship `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
 
 ```php
@@ -113,8 +134,8 @@ php artisan migrate
 After the migration, four new tables will be present:
 - `roles` &mdash; stores role records
 - `permissions` &mdash; stores permission records
-- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and users
-- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/12.x/eloquent-relationships#many-to-many) relations between roles and permissions
+- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/13.x/eloquent-relationships#many-to-many) relations between roles and users
+- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/13.x/eloquent-relationships#many-to-many) relations between roles and permissions
 
 ### Models
 
@@ -598,7 +619,7 @@ Entrust is free software distributed under the terms of the MIT license.
 
 Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
 
-The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11 and 12:
+The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11, 12 and 13:
 
 ```shell
 composer install
