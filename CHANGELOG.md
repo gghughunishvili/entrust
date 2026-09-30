@@ -16,6 +16,11 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 ### Changed
 
 - README compatibility table and install instructions updated for the 13.x line.
+- The compatibility table is now a per-version documentation index: every released tag
+  from `2.0.0` up is listed with the Laravel, PHP and Lumen versions read from that tag's
+  own `composer.json`, its maintenance status, and links to both the README frozen at that
+  tag and its release page. Anyone pinned to an older Entrust can find the docs that match
+  what they actually installed instead of reading the latest README.
 
 ### Notes
 
