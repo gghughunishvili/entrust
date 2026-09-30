@@ -1,19 +1,17 @@
 <?php echo '<?php' ?>
 
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class EntrustSetupTables extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        DB::beginTransaction();
-
         // Create table for storing roles
         Schema::create('{{ $rolesTable }}', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -25,8 +23,8 @@ class EntrustSetupTables extends Migration
 
         // Create table for associating roles to users (Many-to-Many)
         Schema::create('{{ $roleUserTable }}', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('role_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('role_id');
 
             $table->foreign('user_id')->references('{{ $userKeyName }}')->on('{{ $usersTable }}')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -47,8 +45,8 @@ class EntrustSetupTables extends Migration
 
         // Create table for associating permissions to roles (Many-to-Many)
         Schema::create('{{ $permissionRoleTable }}', function (Blueprint $table) {
-            $table->bigInteger('permission_id')->unsigned();
-            $table->bigInteger('role_id')->unsigned();
+            $table->unsignedBigInteger('permission_id');
+            $table->unsignedBigInteger('role_id');
 
             $table->foreign('permission_id')->references('id')->on('{{ $permissionsTable }}')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -57,20 +55,16 @@ class EntrustSetupTables extends Migration
 
             $table->primary(['permission_id', 'role_id']);
         });
-
-        DB::commit();
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('{{ $permissionRoleTable }}');
         Schema::drop('{{ $permissionsTable }}');
         Schema::drop('{{ $roleUserTable }}');
         Schema::drop('{{ $rolesTable }}');
     }
-}
+};

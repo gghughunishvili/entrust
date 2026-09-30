@@ -1,9 +1,14 @@
-# ENTRUST (Laravel 6 Package)
+# ENTRUST (Laravel 11 Package)
 
-Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 6**.
+[![Tests](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml/badge.svg)](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/gghughunishvili/entrust/v/stable)](https://packagist.org/packages/gghughunishvili/entrust)
+[![License](https://poser.pugx.org/gghughunishvili/entrust/license)](https://packagist.org/packages/gghughunishvili/entrust)
+
+Entrust is a succinct and flexible way to add Role-based Permissions to **Laravel 11**.
 
 ## Contents
 
+- [Compatibility](#compatibility)
 - [Installation](#installation)
 - [Configuration](#configuration)
     - [User relation to roles](#user-relation-to-roles)
@@ -25,33 +30,36 @@ Entrust is a succinct and flexible way to add Role-based Permissions to **Larave
 - [Contribution guidelines](#contribution-guidelines)
 - [Additional information](#additional-information)
 
+## Compatibility
+
+The package tracks Laravel's own major release line: Entrust `11.x` targets Laravel `11.x`.
+
+| Entrust | Laravel | PHP |
+| --- | --- | --- |
+| `^11.0` | `11.x` | `8.2` – `8.4` |
+| `^10.0` | `6.x` – `10.x` | `7.2+` |
+
+Older Laravel releases are no longer maintained here. If you are still on Laravel 6–10,
+stay on `^10.0`.
+
 ## Installation
 
-1) In order to install Laravel 6 Entrust, just add the following to your composer.json. Then run `composer update`:
-
-```json
-"gghughunishvili/entrust": "^2.0"
-```
-
-2) Open your `config/app.php` and add the following to the `providers` array:
-
-```php
-Zizaco\Entrust\EntrustServiceProvider::class,
-```
-
-3) In the same `config/app.php` and add the following to the `aliases ` array:
-
-```php
-'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-```
-
-4) Run the command below to publish the package config file `config/entrust.php`:
+1) Require the package. It targets Laravel 11:
 
 ```shell
-php artisan vendor:publish
+composer require gghughunishvili/entrust:^11.0
 ```
 
-5) Open your `config/auth.php` and add the following to it:
+2) The service provider and the `Entrust` facade alias are registered automatically through
+Laravel's package discovery. Nothing to add to `bootstrap/providers.php`.
+
+3) Publish the package config file to `config/entrust.php`:
+
+```shell
+php artisan vendor:publish --tag=entrust-config
+```
+
+4) Open your `config/auth.php` and add the following to it:
 
 ```php
 'providers' => [
@@ -63,15 +71,19 @@ php artisan vendor:publish
 ],
 ```
 
-6)  If you want to use [Middleware](#middleware) (requires Laravel 5.1 or later) you also need to add the following:
+5) If you want to use [Middleware](#middleware), register the aliases. Laravel 11 no longer
+ships `app/Http/Kernel.php` — middleware aliases live in `bootstrap/app.php`:
 
 ```php
-    'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
-    'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
-    'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-```
+use Illuminate\Foundation\Configuration\Middleware;
 
-to `routeMiddleware` array in `app/Http/Kernel.php`.
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'role'       => \Zizaco\Entrust\Middleware\EntrustRole::class,
+        'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
+        'ability'    => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+    ]);
+})
 
 ## Configuration
 
@@ -98,17 +110,17 @@ php artisan migrate
 After the migration, four new tables will be present:
 - `roles` &mdash; stores role records
 - `permissions` &mdash; stores permission records
-- `role_user` &mdash; stores [many-to-many](http://laravel.com/docs/4.2/eloquent#many-to-many) relations between roles and users
-- `permission_role` &mdash; stores [many-to-many](http://laravel.com/docs/4.2/eloquent#many-to-many) relations between roles and permissions
+- `role_user` &mdash; stores [many-to-many](https://laravel.com/docs/11.x/eloquent-relationships#many-to-many) relations between roles and users
+- `permission_role` &mdash; stores [many-to-many](https://laravel.com/docs/11.x/eloquent-relationships#many-to-many) relations between roles and permissions
 
 ### Models
 
 #### Role
 
-Create a Role model inside `app/models/Role.php` using the following example:
+Create a Role model inside `app/Models/Role.php` using the following example:
 
 ```php
-<?php namespace App;
+<?php namespace App\Models;
 
 use Zizaco\Entrust\EntrustRole;
 
@@ -126,10 +138,10 @@ Both `display_name` and `description` are optional; their fields are nullable in
 
 #### Permission
 
-Create a Permission model inside `app/models/Permission.php` using the following example:
+Create a Permission model inside `app/Models/Permission.php` using the following example:
 
 ```php
-<?php namespace App;
+<?php namespace App\Models;
 
 use Zizaco\Entrust\EntrustPermission;
 
@@ -150,15 +162,16 @@ In general, it may be helpful to think of the last two attributes in the form of
 Next, use the `EntrustUserTrait` trait in your existing `User` model. For example:
 
 ```php
-<?php
+<?php namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
-class User extends Eloquent
+class User extends Authenticatable
 {
     use EntrustUserTrait; // add this trait to your user model
 
-    ...
+    // ...
 }
 ```
 
@@ -422,6 +435,11 @@ For more complex situations use `ability` middleware which accepts 3 parameters:
 
 ### Short syntax route filter
 
+> **Removed on Laravel 11.** `Entrust::routeNeedsRole()`, `Entrust::routeNeedsPermission()`
+> and `Entrust::routeNeedsRoleOrPermission()` are built on `Route::filter()` / `Route::when()`,
+> which Laravel dropped in 5.2. They are kept for backwards compatibility but will throw on
+> Laravel 11. Use [Middleware](#middleware) instead.
+
 To filter a route by permission or role you can call the following in your `app/Http/routes.php`:
 
 ```php
@@ -470,6 +488,10 @@ Entrust::routeNeedsRoleOrPermission(
 
 ### Route filter
 
+> **Removed on Laravel 11.** `Route::filter()` and `Route::when()` no longer exist. The
+> equivalent today is a middleware, or an inline check with `Entrust::can()` /
+> `Entrust::hasRole()` inside the controller.
+
 Entrust roles/permissions can be used in filters by simply using the `can` and `hasRole` methods from within the Facade:
 
 ```php
@@ -514,7 +536,8 @@ SQLSTATE[HY000]: General error: 1005 Can't create table 'laravelbootstrapstarter
 ```
 
 Then it's likely that the `id` column in your user table does not match the `user_id` column in `role_user`.
-Make sure both are `INT(10)`.
+The generated migration uses `unsignedBigInteger`, which matches Laravel's default `id()`
+column. If your users table uses a different key type, adjust the generated migration to match.
 
 When trying to use the EntrustUserTrait methods, you encounter the error which looks like
 
@@ -522,7 +545,7 @@ When trying to use the EntrustUserTrait methods, you encounter the error which l
 
 then probably you don't have published Entrust assets or something went wrong when you did it.
 First of all check that you have the `entrust.php` file in your `config` directory.
-If you don't, then try `php artisan vendor:publish` and, if it does not appear, manually copy the `/vendor/zizaco/entrust/src/config/config.php` file in your config directory and rename it `entrust.php`.
+If you don't, then try `php artisan vendor:publish --tag=entrust-config` and, if it does not appear, manually copy the `vendor/gghughunishvili/entrust/src/config/config.php` file into your config directory and rename it `entrust.php`.
 
 If your app uses a custom namespace then you'll need to tell entrust where your `permission` and `role` models are, you can do this by editing the config file in `config/entrust.php`
 
@@ -539,6 +562,13 @@ Entrust is free software distributed under the terms of the MIT license.
 ## Contribution guidelines
 
 Support follows PSR-1 and PSR-4 PHP coding standards, and semantic versioning.
+
+The test suite runs on PHP 8.2, 8.3 and 8.4 against Laravel 11:
+
+```shell
+composer install
+vendor/bin/phpunit
+```
 
 Please report any issue you find in the issues page.
 Pull requests are welcome.

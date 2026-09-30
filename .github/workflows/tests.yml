@@ -1,0 +1,59 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }} · Laravel ${{ matrix.laravel }} · ${{ matrix.dependency-version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+        laravel: ['11.*']
+        dependency-version: [prefer-lowest, prefer-stable]
+        exclude:
+          # Laravel 11.0.0 predates PHP 8.4 support, so the lowest resolvable
+          # set is only meaningful on the lowest PHP version we support.
+          - php: '8.3'
+            dependency-version: prefer-lowest
+          - php: '8.4'
+            dependency-version: prefer-lowest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.dependency-version }}-${{ hashFiles('composer.json') }}
+
+      - name: Require Laravel ${{ matrix.laravel }}
+        run: |
+          composer require --no-update --no-interaction \
+            "illuminate/console:${{ matrix.laravel }}" \
+            "illuminate/support:${{ matrix.laravel }}" \
+            "illuminate/cache:${{ matrix.laravel }}"
+          composer require --no-update --no-interaction --dev \
+            "illuminate/database:${{ matrix.laravel }}"
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-progress
+
+      - name: Execute tests
+        run: vendor/bin/phpunit

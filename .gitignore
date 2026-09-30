@@ -20,3 +20,7 @@ Thumbs.db
 /.phpintel
 
 .phpunit.result.cache
+
+# Libraries should not commit a lock file; the CI matrix resolves per Laravel version.
+composer.lock
+.phpunit.cache
