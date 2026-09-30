@@ -3,6 +3,26 @@
 All notable changes to this package are documented here. The major version tracks the
 Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
+## [13.0.1]
+
+Documentation only; no code changes, nothing to do when upgrading from `13.0.0`.
+
+### Fixed
+
+- An unclosed ```` ```php ```` fence in the Laravel 11 middleware installation step inverted
+  every fenced block after it, so from "Configuration" onwards the README rendered prose as
+  code and code as prose. Present in `11.0.0`, `12.0.0` and `13.0.0`.
+- The middleware snippet read as a standalone statement, which invited adding a second
+  `withMiddleware()` call to `bootstrap/app.php` instead of extending the closure the
+  skeleton already ships. It now says to add the body to the existing closure, notes that
+  the `Middleware` import is already generated, and notes that Laravel 13 writes the
+  signature as `function (Middleware $middleware): void`.
+
+### Changed
+
+- The version index points `^13.0` at `13.0.1`, and records that the usage API is identical
+  across `11.x`–`13.x`, so the `13.x` page is accurate for all three.
+
 ## [13.0.0]
 
 ### Added
@@ -103,6 +123,7 @@ Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
 See the [commit history](https://github.com/gghughunishvili/entrust/commits/master).
 
+[13.0.1]: https://github.com/gghughunishvili/entrust/releases/tag/13.0.1
 [13.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/13.0.0
 [12.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/12.0.0
 [11.0.0]: https://github.com/gghughunishvili/entrust/releases/tag/11.0.0
