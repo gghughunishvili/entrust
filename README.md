@@ -1,4 +1,4 @@
-# ENTRUST (Laravel 13 Package)
+# ENTRUST (Laravel 11, 12 and 13 Package)
 
 [![Tests](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml/badge.svg)](https://github.com/gghughunishvili/entrust/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/gghughunishvili/entrust/v/stable)](https://packagist.org/packages/gghughunishvili/entrust)
@@ -69,7 +69,8 @@ or `12.0.0` page renders oddly: both shipped with an unclosed Markdown code fenc
 Laravel has discontinued it. Lumen users should stay on `^10.0`, or `3.0` for Lumen 7 — see
 the Lumen note under [Troubleshooting](#class-entrust-not-found-on-lumen).
 
-A full list of changes per release is in [CHANGELOG.md](CHANGELOG.md).
+A full list of changes per release is in [CHANGELOG.md](CHANGELOG.md). Release notes for
+each version, for maintainers and for users, are in [`docs/releases/`](docs/releases).
 
 ## Installation
 
@@ -474,7 +475,7 @@ For more complex situations use `ability` middleware which accepts 3 parameters:
 > **Removed on Laravel 11+.** `Entrust::routeNeedsRole()`, `Entrust::routeNeedsPermission()`
 > and `Entrust::routeNeedsRoleOrPermission()` are built on `Route::filter()` / `Route::when()`,
 > which Laravel dropped in 5.2. They are kept for backwards compatibility but will throw on
-> Laravel 11. Use [Middleware](#middleware) instead.
+> Laravel 11 and newer. Use [Middleware](#middleware) instead.
 
 To filter a route by permission or role you can call the following in your `app/Http/routes.php`:
 

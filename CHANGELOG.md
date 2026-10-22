@@ -1,5 +1,16 @@
 # Changelog
 
+Each release also has two sets of notes in [`docs/releases/`](docs/releases):
+`internal.md` (detail for maintainers: decisions, verification, gaps) and `external.md`
+(a short summary for users). Index:
+
+| Version | Internal | External |
+| --- | --- | --- |
+| 13.0.1 | [notes](docs/releases/13.0.1/internal.md) | [summary](docs/releases/13.0.1/external.md) |
+| 13.0.0 | [notes](docs/releases/13.0.0/internal.md) | [summary](docs/releases/13.0.0/external.md) |
+| 12.0.0 | [notes](docs/releases/12.0.0/internal.md) | [summary](docs/releases/12.0.0/external.md) |
+| 11.0.0 | [notes](docs/releases/11.0.0/internal.md) | [summary](docs/releases/11.0.0/external.md) |
+
 All notable changes to this package are documented here. The major version tracks the
 Laravel major release it targets, so Entrust `11.x` targets Laravel `11.x`.
 
